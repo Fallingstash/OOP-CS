@@ -53,3 +53,115 @@ public class HtmlDocument : Document {
         return base.GetInfo() + $", Doctype: {DocType}";
   }
 }
+
+public class DocumentManager
+{
+  private static DocumentManager _instance;
+
+  private DocumentManager() { }
+
+  public static DocumentManager Instance
+  {
+      get
+      {
+          if (_instance == null)
+          {
+              _instance = new DocumentManager();
+          }
+          return _instance;
+      }
+  }
+
+  public void ShowDocumentInfo(Document document)
+  {
+    Console.WriteLine(document.GetInfo());
+  }
+}
+
+class Program { 
+  static void Main(string[] args) { 
+    WordDocument wordDoc = new WordDocument {
+      Name = "Document Word",
+      Author = "Author 1",
+      Keywords = "Keyword 1",
+      Theme = "Theme 1",
+      FilePath = "C:\\forLaba\\word.docx",
+      WordCount = 100,
+    };
+
+    PdfDocument pdfDoc = new PdfDocument { 
+      Name = "PDF Document",
+      Author = "Author 2",
+      Keywords = "Keyword 2",
+      Theme = "Theme 2",
+      FilePath = "C:\\forLaba\\PDF.pdf",
+      IsEncrypted = true,
+    };
+
+    ExcelDocument excelDoc = new ExcelDocument { 
+      Name = "Excel Document",
+      Author = "Author 3",
+      Keywords = "Keyword 3",
+      Theme = "Theme 3",
+      FilePath = "C:\\forLaba\\Excel.xlsx",
+      SheetCount = 5,
+    };
+
+    TxtDocument txtDoc = new TxtDocument {
+      Name = "TXT Document",
+      Author = "Author 4",
+      Keywords = "Keyword 4",
+      Theme = "Theme 4",
+      FilePath = "C:\\forLaba\\Text.txt",
+      IsPlainText = true,
+    };
+
+    HtmlDocument htmlDoc = new HtmlDocument {
+      Name = "Document HTML",
+      Author = "Author 5",
+      Keywords = "Keyword 5",
+      Theme = "Theme 5",
+      FilePath = "C:\\forLaba\\HTML.html",
+      DocType = "<!DOCTYPE html>",
+    };
+    while (true)
+    {
+      Console.WriteLine("Выберите тип документа:");
+      Console.WriteLine("1. Word Document");
+      Console.WriteLine("2. PDF Document");
+      Console.WriteLine("3. Excel Document");
+      Console.WriteLine("4. TXT Document");
+      Console.WriteLine("5. HTML Document");
+      Console.WriteLine("0. Выход");
+
+      var choice = Console.ReadLine();
+
+      if (choice == "0") { 
+        break;
+      }
+      Document document = null;
+
+      switch (choice)
+      {
+        case "1":
+        document = new WordDocument();
+        break;
+        case "2":
+          document = new PdfDocument();
+          break;
+        case "3":
+          document = new ExcelDocument();
+          break;
+        case "4":
+          document = new TxtDocument();
+          break;
+        case "5":
+          document = new HtmlDocument();
+          break;
+        default:
+          Console.WriteLine("Неверный выбор. Попробуйте снова.");
+          continue;
+      }
+    }
+  }
+}
